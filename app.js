@@ -20,7 +20,8 @@ var columns = [colOne, colTwo, colThree];
 
 var diagOne = [document.querySelector('.top .left'), document.querySelector('.middleY .middleX'), document.querySelector('.bottom .right')];
 var diagTwo = [document.querySelector('.top .right'), document.querySelector('.middleY .middleX'), document.querySelector('.bottom .left')];
-var diagonals = [diagOne, diagTwo];
+var diagThree = [document.querySelector('.top .right'), document.querySelector('.middleY .middleX'), document.querySelector('.bottom .left')];
+var diagonals = [diagOne, diagTwo, diagThree];
 
 // variable for all winning cell patterns in the grid
 
@@ -33,9 +34,23 @@ var tacBtn = document.querySelector('.tac');
 
 var clickedCell = null;
 
+// variables for tracking the game status
+
+var playerTurn = Math.ceil(Math.random()*2);
+
 // PROCESSING
 
 // event handlers
+
+
+function alternateTurns (playerTurn) {
+    if (playerTurn == 1) {
+        return 2;
+    }
+    else {
+        return 1;
+    }
+}
 
 function handleCell (event) {
     clickedCell = event.target;
@@ -44,23 +59,59 @@ function handleCell (event) {
 
 function handleTic () {
     clickedCell.textContent = 'tic';
-    clickedCell.classList.remove('.clicked');
+    clickedCell.classList.remove('clicked');
+    clickedCell.dataset.player = playerTurn;
+    var isDraw = !checkWin() && allCellsFilled();
     if (checkWin()) {
-        prompt('You won!');
-        document.querySelectorAll('.grid-cell').textContent = '';
+        clickedCell.textContent = 'tic';
+        clearCells();
+        document.querySelector('.player-turn-text').textContent = `Player ${playerTurn} Won!`;
+    }
+    else if (isDraw) {
+        document.querySelector('.player-turn-text').textContent = `It's a draw!`;
+    }
+    else {
+        playerTurn = alternateTurns(playerTurn);
+        document.querySelector('.player-turn-text').textContent = `It's Player ${playerTurn}'s turn!`;
+    }
+}
+
+function clearCells () {
+    for (var i = 0; i < boardCells.length; i++) {
+        boardCells[i].textContent = '';
     }
 }
 
 function handleTac () {
     clickedCell.textContent = 'tac';
-    clickedCell.classList.remove('.clicked');
+    clickedCell.classList.remove('clicked');
+    clickedCell.dataset.player = playerTurn;
+    var isDraw = !checkWin() && allCellsFilled();
     if (checkWin()) {
-        prompt('You won!');
-        document.querySelectorAll('.grid-cell').textContent = '';
+        clickedCell.textContent = 'tac';
+        clearCells();
+        document.querySelector('.player-turn-text').textContent = `Player ${playerTurn} Won!`;
+    }
+    else if (isDraw) {
+        document.querySelector('.player-turn-text').textContent = `It's a draw!`;
+    }
+    else {
+        playerTurn = alternateTurns(playerTurn);
+        document.querySelector('.player-turn-text').textContent = `It's Player ${playerTurn}'s turn!`;
     }
 }
 
-// has the game ended?
+// Game status checkers
+
+function allCellsFilled () {
+    allCellsClicked = true;
+    for (var i = 0; i < boardCells.length; i++) {
+        if (boardCells[i].textContent == '') {
+            allCellsClicked = false;
+        }
+    }
+    return allCellsClicked;
+}
 
 function checkWin () {
     for (var lineType = 0; lineType < 3; lineType++) {
@@ -74,8 +125,7 @@ function checkWin () {
             var cellThree = lineThree[2];
 
             console.log(lineOne);
-
-            if (cellOne.textContent == cellTwo.textContent && cellTwo.textContent == cellThree.textContent) {
+            if (cellOne.textContent == cellTwo.textContent && cellTwo.textContent == cellThree.textContent && cellOne.textContent != '') {
                 return true;
             }
         }
