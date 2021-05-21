@@ -31,3 +31,25 @@ Challenges in CSS:
 - Wanted to change the last clicked cell to a permanently 'pushed' button, so that the player wouldn't have to remember which cell they clicked before they
 clicked the orange or white tic-tac. I didn't know the CSS rules, or get the time, for this.
 - Wanted a time-out before all visual history of the previous game disappears.
+
+
+
+Timeline:
+1. Writing the basic HTML Markup, with a 3-grid column for Player turn information, the game board, and the 'tic' and 'tac' buttons, respectively.
+2. Ditching the scoreboard on the first column, and making the 3x3 grid in the second column of <body></body>
+3. Getting the buttons, grid objects, and player turn spans as document objects in JS, and initialising a random starting player
+4. Adding functionality for alternating turns
+5. Writing event handlers for player turns
+6. Writing the checkWin() function that iterates through winning patterns on each turn, displaying the win status on the first column of the 'body' tag
+7. Writing the draw condition
+8. Adding hover and active animations for the buttons and grid cells
+9. Adding orange and white tic tacs to the background images of the buttons
+10. Choosing a color palette, and adding a suitable font family
+11. Adding extra animations to buttons and cell objects, e.g. 'shake' on Tic-Tac buttons, and depth for the cell buttons
+12. Adding 'glow' effect to the game title span in the first column of body, from keyframes
+
+
+
+
+
+
