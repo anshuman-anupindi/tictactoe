@@ -1,25 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Pattaya&display=swap');
+
+@-webkit-keyframes glow {
+    from {
+      text-shadow: 0 0 10px rgb(255, 242, 62), 0 0 20px rgb(255, 219, 18), 0 0 30px #e6d700, 0 0 40px #f5d419, 0 0 50px #e66f00, 0 0 60px #e68a00, 0 0 70px #e66f00;
+    }
+    to {
+      text-shadow: 0 0 20px rgb(241, 207, 14), 0 0 30px #ffed4d, 0 0 40px #ffb24d, 0 0 50px #f8ca33, 0 0 60px #ffb84d, 0 0 70px #fc8f29, 0 0 80px #e4800e;
+    }
+  }
+
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
 body {
     display: grid;
     align-items: center;
     height: fit-content;
+    font-family: 'Pattaya';
+    font-size: xx-large;
+    color:rgb(255, 177, 60);
+    background-color: #ff6600;
 }
 
 main {
     display: grid;
-    grid-template-columns: 1fr 3fr 1fr;
-    height: 1200px;
-    gap: 20px;
+    grid-template-columns: 25% 50% 25%;
+    height: 1230px;
+    gap: 100px;
 }
 
 .scoreboard {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content:space-evenly;
 }
 
 .tic-or-tac {
     display: flex;
     flex-direction: column;
     width: 20%;
+    justify-content: space-evenly;
 }
 
 .game {
@@ -40,7 +72,113 @@ main {
 
 .grid-cell {
     display: grid;
-    border: 4px solid black;
+    border: 20px solid orange;
     justify-content: center;
     align-items: center;
+    border-radius: 10%;
+    box-shadow: 0 9px rgb(250, 199, 123);
 }
+
+.grid-cell:hover {
+    background-color: rgb(255, 177, 60);
+    transition: 0.5s;
+    opacity: 0.8;
+    border-radius: 10%;
+    box-shadow: 0 13px darkorange;
+}
+
+.grid-cell:active {
+    box-shadow: 0 10px darkorange;
+    transition: 0.05s linear;
+    transform: translateY(2%);
+}
+
+.tic {
+    height: 300px;
+    width: 300px;
+    background-image: url(../images/freshmint.png);
+    background-size: cover;
+    border-radius: 20%;
+    border: 5px solid orange;
+    box-shadow: 0 16px darkorange;
+    transition: 0.01s linear;
+}
+
+.tic:hover {
+    background-color:darkorange;
+    opacity: 0.6;
+    transition: 0.2s linear;
+    animation: shake 0.5s;
+}
+
+.tic:active {
+    background-color: darkorange;
+    opacity: 0.5;
+    transition: 0.01s linear;
+    box-shadow: 0 8px rgb(185, 103, 2);
+    transform: translateY(10%);
+}
+
+.tac {
+    height: 300px;
+    width: 300px;
+    background-image: url(../images/orange.png);
+    background-size: cover;
+    border-radius: 20%;
+    border: 5px solid orange;
+    box-shadow: 0 16px darkorange;
+    transition: 0.01s linear;
+}
+
+.tac:hover {
+    background-color:darkorange;
+    opacity: 0.6;
+    transition: 0.2s linear;
+    animation: shake 0.5s;
+}
+
+.tac:active {
+    background-color:darkorange;
+    opacity: 0.4;
+    transition: 0.02s linear;
+    transform: translateY(10%);
+}
+
+div[data-ticortac='tic'] {
+    background-image: url(../images/freshmint.png);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: 0.1s linear;
+    transform: rotateY(40%);
+}
+
+div[data-ticortac='tac'] {
+    background-image: url(../images/orange.png);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: 0.1s linear;
+    transform: rotateY(40%);
+}
+
+.player-turn-text {
+    font-size: 70px;
+    color: #ff6600;
+    border: 9px solid #ffe600;
+    border-radius: 30px;
+    background-color: #ffe600;
+}
+
+h3 {
+    font-size: 100px;
+    color:#ff6600;
+    -webkit-animation: glow 1s ease-in-out infinite alternate;
+    -moz-animation: glow 1s ease-in-out infinite alternate;
+    animation: glow 1s ease-in-out infinite alternate;
+}
+
+
+
+
+

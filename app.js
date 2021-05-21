@@ -42,6 +42,7 @@ var playerTurn = Math.ceil(Math.random()*2);
 
 // event handlers
 
+document.querySelector('.player-turn-text').textContent = `Player ${playerTurn} starts.`;
 
 function alternateTurns (playerTurn) {
     if (playerTurn == 1) {
@@ -57,14 +58,22 @@ function handleCell (event) {
     clickedCell.classList.add('clicked');
 }
 
+function clearCells () {
+    for (var i = 0; i < boardCells.length; i++) {
+        boardCells[i].disabled = true;
+        boardCells[i].dataset.ticortac = '';
+        boardCells[i].dataset.player = '';
+    }
+}
+
 function handleTic () {
-    clickedCell.textContent = 'tic';
     clickedCell.classList.remove('clicked');
     clickedCell.dataset.player = playerTurn;
+    clickedCell.dataset.ticortac = 'tic';
+    
     var isDraw = !checkWin() && allCellsFilled();
+
     if (checkWin()) {
-        clickedCell.textContent = 'tic';
-        clearCells();
         document.querySelector('.player-turn-text').textContent = `Player ${playerTurn} Won!`;
     }
     else if (isDraw) {
@@ -76,20 +85,15 @@ function handleTic () {
     }
 }
 
-function clearCells () {
-    for (var i = 0; i < boardCells.length; i++) {
-        boardCells[i].textContent = '';
-    }
-}
 
 function handleTac () {
-    clickedCell.textContent = 'tac';
     clickedCell.classList.remove('clicked');
     clickedCell.dataset.player = playerTurn;
+    clickedCell.dataset.ticortac = 'tac';
+
     var isDraw = !checkWin() && allCellsFilled();
+
     if (checkWin()) {
-        clickedCell.textContent = 'tac';
-        clearCells();
         document.querySelector('.player-turn-text').textContent = `Player ${playerTurn} Won!`;
     }
     else if (isDraw) {
@@ -106,7 +110,7 @@ function handleTac () {
 function allCellsFilled () {
     allCellsClicked = true;
     for (var i = 0; i < boardCells.length; i++) {
-        if (boardCells[i].textContent == '') {
+        if (boardCells[i].dataset.ticortac == '') {
             allCellsClicked = false;
         }
     }
@@ -123,9 +127,8 @@ function checkWin () {
             var cellOne = lineOne[0];
             var cellTwo = lineTwo[1];
             var cellThree = lineThree[2];
-
-            console.log(lineOne);
-            if (cellOne.textContent == cellTwo.textContent && cellTwo.textContent == cellThree.textContent && cellOne.textContent != '') {
+            console.log(cellOne.dataset.ticortac);
+            if (cellOne.dataset.ticortac == cellTwo.dataset.ticortac && cellTwo.dataset.ticortac == cellThree.dataset.ticortac && cellOne.dataset.ticortac != '') {
                 return true;
             }
         }
