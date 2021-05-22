@@ -31,6 +31,7 @@ var allWinningLines = [rows, columns, diagonals];
 
 var ticBtn = document.querySelector('.tic');
 var tacBtn = document.querySelector('.tac');
+var newGameBtn = document.querySelector('p');
 
 var clickedCell = null;
 
@@ -58,14 +59,6 @@ function handleCell (event) {
     clickedCell.classList.add('clicked');
 }
 
-function clearCells () {
-    for (var i = 0; i < boardCells.length; i++) {
-        boardCells[i].disabled = true;
-        boardCells[i].dataset.ticortac = '';
-        boardCells[i].dataset.player = '';
-    }
-}
-
 function handleTic () {
     clickedCell.classList.remove('clicked');
     clickedCell.dataset.player = playerTurn;
@@ -75,9 +68,11 @@ function handleTic () {
 
     if (checkWin()) {
         document.querySelector('.player-turn-text').textContent = `Player ${playerTurn} Won!`;
+        endGame();
     }
     else if (isDraw) {
         document.querySelector('.player-turn-text').textContent = `It's a draw!`;
+        endGame();
     }
     else {
         playerTurn = alternateTurns(playerTurn);
@@ -127,13 +122,36 @@ function checkWin () {
             var cellOne = lineOne[0];
             var cellTwo = lineTwo[1];
             var cellThree = lineThree[2];
-            console.log(cellOne.dataset.ticortac);
+
             if (cellOne.dataset.ticortac == cellTwo.dataset.ticortac && cellTwo.dataset.ticortac == cellThree.dataset.ticortac && cellOne.dataset.ticortac != '') {
                 return true;
             }
         }
     }
     return false;
+}
+
+function newGame () {
+    for (var i = 0; i < boardCells.length; i++) {
+        boardCells[i].dataset.ticortac = '';
+        boardCells[i].dataset.player = '';
+        boardCells[i].disabled = false;
+    }
+    ticBtn.disabled = false;
+    tacBtn.disabled = false;
+    playerTurn = Math.ceil(Math.random()*2);
+    document.querySelector('.player-turn-text').textContent = `Player ${playerTurn} starts.`;
+    clickedCell = null;
+
+}
+
+function endGame () {
+    for (var i = 0; i < boardCells.length; i++) {
+        boardCells[i].disabled = true;
+        ticBtn.disabled = true;
+        tacBtn.disabled = true;
+    }
+    clickedCell = null;
 }
 
 // event listeners 
@@ -145,3 +163,4 @@ for (var i = 0; i < boardCells.length; i++) {
 
 ticBtn.addEventListener('click', handleTic);
 tacBtn.addEventListener('click', handleTac);
+newGameBtn.addEventListener('click', newGame);
